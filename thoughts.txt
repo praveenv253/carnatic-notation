@@ -80,3 +80,43 @@ What does a song look like in yaml?
         nadai: 4
   + In the above method, if a list item contains the defaults key, then all
     other lines in this get ignored.
+
+---
+
+1st September 2018
+------------------
+
+- Srikumar's Carnot engine: https://github.com/srikumarks/carnot
+- I now sincerely feel that the YAML formatting and metadata are a huge pain.
+  There isn't enough flexibility and things are bound to change way too much
+- Instead, I feel that using an idea similar to that of Carnot will be very
+  helpful: ideally I would just use his parser directly.
+- In fact, his code already seems to be pretty nice when it comes to embedding
+  the notation as an SVG in a webpage.
+- But I really do want to do better.
+  + First and foremost, it should be possible to make a pdf document out of
+    this.
+  + Secondly, the grand vision is to enable a new notational format that has
+    more information than simple swaras. Ideally, timing information should be
+    in here as well, though perhaps it is foolish to assume that all subtleties
+    can be losslessly preserved. Nevertheless, *a little* distortion is a lot
+    better than *a lot of* distortion (which is the current norm).
+  + Thirdly, the format should be able to allow for variations in sangati types
+    and such.
+- Given that I don't like how the svg rendering comes out, one option is to
+  simply go and change *that*, but this seems hard. Also latex in general does
+  a way better job of rendering than you could possibly do with svg (the
+  kerning was especially bad in the svg, and is likely to be especially good
+  with latex)
+- But we also need something that can be easily transcribed both into pdf and
+  html. So, markdown is a good starting format. It's easier to write markdown
+  than even yaml.
+- What I also really like about the carnot engine is the taalam specification.
+  There's intrinsic freedom in the specification, along with simplicity. My
+  propositions of listing all taalam combinations was just completely hopeless
+  in comparison.
+- Another major drawback in the carnot engine is its swaram specification
+  capabilities, because of its use of capital/small letters.
+- So I think the thing to do is to simply rewrite the carnot parser in python,
+  with some simple modifications for handling different swaram types.
+- Then we need to create a latex renderer and an html renderer.
