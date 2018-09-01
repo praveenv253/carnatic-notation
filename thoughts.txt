@@ -1,0 +1,82 @@
+I would like to have the following capabilities:
+- A full class import, which allows you to create a single song in a document:
+  Title, composer, ragam, talam, etc. could be options to maketitle and so on
+- A package that can be imported separately to just notate pieces of music:
+  + For e.g., I want to write swaras in khanda jathi ata talam, tisra nadai.
+    I should have an environment with options that lets me do this.
+  + I should also be able to do this with swara-sahityam.
+  + Options to have swaras upright and sahityam in italics, perhaps
+- Some control on spacing (though probably this will have to come later)
+  + Should we have a full taalam cycle on one line, or split over two lines, or
+    split over three lines? How should they be split, etc.
+  + To start with, I won't have end-user control here, and instead just define
+    some defaults.
+- Simplified definitions for notes in mandra sthayi, tara sthayi, etc.
+
+How do I go about implementing this?
+- Option 1: different environments for different talas.
+- Option 2: One environment for all talas, but with different options/params
+  + This is much more difficult
+- However, I definitely do not want to rewrite things for swaram and sahityam.
+  + In this regard, it would be nice if swaram/sahityam could be some kind of
+    option that can be passed to the environment for the appropriate talam.
+- Refer to Tables in LaTeX2e: Packages and Methods, by Lapo Filippo Mori
+  (https://www.tug.org/pracjourn/2007-1/mori/mori.pdf).
+- Also see the TeX SE question "Which tabular packages do which tasks and which
+  packages conflict?" (https://tex.stackexchange.com/q/12672/56690).
+- The collcell package appears to be useful to define new columns which apply
+  a user-defined macro on each cell
+  (http://ctan.imsc.res.in/macros/latex/contrib/collcell/collcell.pdf).
+
+YAML + Python
+- I'm starting to strongly feel that trying to write a latex package using
+  latex is a bad idea. It doesn't enable easy maintainability, because it's
+  such a poor *programming* language.
+- Also, expecting someone to contribute latex code for music notation is not
+  the greatest idea. Far easier to read and write YAML code.
+- It's also easier to mass-convert a lot of existing notation available online
+  into YAML, than to latex.
+- Finally, YAML can be very easily converted to other formats, including HTML.
+- Since we need some scripting language to do the conversions, and Python is
+  my favourite language, this is what I'll be using
+
+What does a song look like in yaml?
+- I think the basic layout of swara-sahitya should be something like:
+  - sw: # Two lines of swaram
+    - s r g m p d n s'
+    - s' n d p m g r s
+  - sa: # Two lines of sahityam
+    - sa , ra , , , swa , thi , , ,
+    - na , mo , , , sthu , the , , ,
+  - swsa: # Alternating swaram and sahityam
+    - s , r , , , m , p , , ,
+    - sa , ra , , , swa , thi , , ,
+    - p m n d p m p , d , , ,
+    - na , mo , , , sthu , the , , ,
+- How do you add meta-data to this? Suppose all three of the above were to
+  appear in the same file one after another, with numbering accordingly? I
+  think it would look like this:
+  - talam: adi
+    nadai: 1  # This unusual nadai is only for sarali varisais
+    sw:
+    - s r g m p d n s'
+    - s' n d p m g r s
+  - talam: rupaka
+    swsa:
+    - s , r , , , m , p , , ,
+    - sa , ra , , , swa , thi , , ,
+    - p m n d p m p , d , , ,
+    - na , mo , , , sthu , the , , ,
+- This way, there's nice integration. Metadata formatting is still unclear,
+  however. More options may be needed
+- How do we set a global context? We need something like CSS, where as things
+  get more local, options can basically get overridden
+  + First, there's the default config. Once a talam is specified, the talam
+    defaults are loaded.
+  + Next, there's the file-level config. This is used to update the talam
+    defaults. Where do these configs go? Here's one option:
+    - defaults:
+        talam: rupaka
+        nadai: 4
+  + In the above method, if a list item contains the defaults key, then all
+    other lines in this get ignored.

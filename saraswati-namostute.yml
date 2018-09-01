@@ -1,0 +1,38 @@
+defaults: # Or maybe this should be called meta
+  ragam: saraswati
+  talam: rupaka
+pallavi: # This label name is aribitrary?
+  meta: # Can include things like section title formatting
+    title: Pallavi # Otherwise, takes the section's label name by default
+    # Can update defaults if desired
+  notation:
+  - swsa: # Alternating swaram and sahityam, first sangathi
+    # Each line must be a full talam cycle
+    # This can make it difficult to count, so we need to think about this...
+    - s , r , , , m , p , , ,
+    - Sa , ra , , , swa , ti , , ,
+    - p m n d p m p , d , , ,
+    - na , mo , , , stu , te , , ,
+    - d , s' , n , d , , , p ,
+    - sha , , , ra , de , , , vi ,
+    - p , , , , , p m r s n. d.
+    - dya , , , , , pra , de , , ,
+  - swsa:
+    - s , r , , , m , p , , ,
+    - Sa , ra , , , swa , ti , , ,
+    - p m p d s' , n , d , , ,
+    - na , mo , , , stu , te , , ,
+    - s' d r' s' n , d , , , p m
+    - sha , , , ra , de , , , vi ,
+    - p d n d p d p m r s n. d.
+    - dya , , , , , pra , de , , ,
+  - swsa:
+    - s , r , , , p m p m r s
+    - Sa , ra , , , swa , ti , , ,
+    - p m p d s' , n , d , , ,
+    - na , mo , , , stu , te , , ,
+    - s' r' m' r' p' m' r' s' n d p m
+    - sha , , , ra , de , , , vi ,
+    - p d r' s' n d p m r s n. d.
+    - dya , , , , , pra , de , , ,
+
