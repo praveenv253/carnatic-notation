@@ -1,4 +1,4 @@
-defaults: # Or maybe this should be called meta
+meta:
   ragam: saraswati
   talam: rupaka
 pallavi: # This label name is aribitrary?
@@ -35,4 +35,3 @@ pallavi: # This label name is aribitrary?
     - sha , , , ra , de , , , vi ,
     - p d r' s' n d p m r s n. d.
     - dya , , , , , pra , de , , ,
-
