@@ -139,6 +139,7 @@ def render_latex(paras):
             if combo_flag:
                 output += ' \\\\\n'
                 sahityas = paras[i+1][2].split()[aksh0 : aksh0 + num_aksh]
+                sahityas = [' ' if s == '_' else s for s in sahityas]
                 output += '\t' + ' & '.join(sahityas)
             output += '\n' + table_post + '\n\n'
             aksh0 += num_aksh
