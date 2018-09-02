@@ -7,11 +7,12 @@ the Carnot engine (https://github.com/srikumarks/carnot).
 
 from __future__ import print_function, division
 import sys
+import re
 
 
 taalam_chars = '|,;+'
 swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
-default_config = {'squeeze': 1}
+default_config = {'squeeze': 1, 'italicize': 1, 'cyclesperline': 1}
 
 
 def parse(md):
@@ -61,6 +62,17 @@ def parse(md):
     return paras
 
 
+def sanitize_pattern(pattern):
+    pattern = ''.join(pattern.split())  # Remove all spaces in the string
+
+    if any(c not in taalam_chars for c in pattern):
+        error_str = ('Invalid character in taalam pattern configuration. '
+                     'Valid characters are: %s' % taalam_chars)
+        raise ValueError(error_str)
+
+    return pattern
+
+
 def parse_config(config_line):
     """Parse and validate a configuration line."""
 
@@ -68,16 +80,16 @@ def parse_config(config_line):
     key, val = (key.strip(), val.strip())
 
     partial_config = default_config
-    if key == 'taalam':
-        val = ''.join(val.split())  # Remove all spaces in the string
-        if any(c not in taalam_chars for c in val):
-            error_str = ('Invalid character in taalam configuration. '
-                         'Valid characters are: %s' % taalam_chars)
-            raise ValueError(error_str)
-        partial_config[key] = val
-        #partial_config['num_aksharas'] = val.count(',') + 2 * val.count(';')
+    if key == 'pattern':
+        partial_config[key] = sanitize_pattern(val)
+    elif key == 'patternstart':
+        partial_config[key] = sanitize_pattern(val)
     elif key == 'squeeze':
         partial_config[key] = float(val)
+    elif key == 'cyclesperline':
+        partial_config[key] = int(val)
+    elif key in ['title', 'raagam', 'taalam', 'arohanam', 'avarohanam']:
+        partial_config[key] = val
     else:
         raise ValueError('Unrecognized configuration option %s' % key)
 
@@ -87,18 +99,99 @@ def parse_config(config_line):
 def gen_latex_table_text(config):
     """Generate the table environment for latex rendering."""
 
+    if config['cyclesperline'] > 1 and '+' in config['pattern']:
+        raise ValueError('Cannot have "+" in pattern when cyclesperline > 1.')
+
     squeeze = config['squeeze']
-    for part in config['taalam'].split('+'):
-        col_fmt = part.replace(',', 'Y').replace(';', 'YY')
-        table_pre = r'\begin{tabularx}{%g\textwidth}{%s}' % (squeeze, col_fmt)
+    for part in config['pattern'].split('+'):
+        if 'patternstart' in config:
+            col_fmt = sanitize_pattern(config['patternstart'])
+        else:
+            col_fmt = ''
+        col_fmt += (part.replace(',', 'Y').replace(';', 'YY')
+                    * config['cyclesperline'])
+
+        # See https://tex.stackexchange.com/a/317543/56690 for top-align
+        table_pre = r'\begin{tabularx}{%g\textwidth}[t]{%s}' % (squeeze, col_fmt)
         table_post = '\end{tabularx}'
         num_aksharas = col_fmt.count('Y')
+
         yield table_pre, table_post, num_aksharas
+
+
+def extract_swaras(text, config):
+    """Extract swaras from text."""
+
+    # Capitalize
+    text = text.upper()
+
+    # Add dots above and below for tara sthayi and mandra sthayi swaras
+    swaras = []
+    for swaram in text.split():
+        num = None
+        if any(i in swaram for i in '123'):
+            num = re.findall(r'\d', swaram)[0]
+            swaram = swaram.replace(num, '')
+        if '.' in swaram:
+            swaram = '\d{%s}' % swaram.replace('.', '')
+        elif '\'' in swaram:
+            swaram = '\\.{%s}' % swaram.replace('\'', '')
+        if num:
+            swaram += r'\textsubscript{%s}' % num
+
+        swaras.append(swaram)
+
+    return swaras
+
+
+def extract_sahityas(text, config):
+    """Extract sahityas from text according to config."""
+
+    chunks = text.split()
+
+    if config['italicize']:
+        sahityas = [' ' if s == '_' else r'\textit{' + s + '}' for s in chunks]
+    else:
+        sahityas = [' ' if s == '_' else s for s in chunks]
+
+    return sahityas
+
+
+def extract_text(text, config):
+    """Extract textual elements and apply formatting if any."""
+
+    if not text.startswith('\\'):
+        return text + '\n\n'
+
+    cmd_txt = text.split(None, maxsplit=1)
+    #print(cmd_txt)
+    if len(cmd_txt) == 1:
+        cmd = cmd_txt[0]
+    else:
+        cmd, txt = cmd_txt
+    cmd = cmd[1:]  # Remove backslash
+
+    if cmd == 'bold':
+        output = r'\textbf{' + txt + '}\n\n'
+    elif cmd == 'enum':
+        output = r'\begin{enumerate}[label=\arabic*),leftmargin=*]' + '\n'
+    elif cmd == 'item':
+        output = r'\item'
+    elif cmd == 'endenum':
+        output = r'\end{enumerate}' + '\n\n'
+    elif cmd == 'empty':
+        output = '\\ \n\n'
+    else:
+        raise ValueError('Unknown command \\%s' % cmd)
+
+    return output
 
 
 def render_latex(paras):
     preamble = (r'\usepackage{tabularx}' + '\n'
+                r'\usepackage{enumitem}' + '\n'
                 r'\newcolumntype{Y}{>{\centering\arraybackslash}X}')
+                #r'\newcolumntype{Y}{C}')
     output = ''
 
     i = 0
@@ -107,7 +200,7 @@ def render_latex(paras):
         num, kind, text, config = para
 
         if kind == 'text':
-            output += text + '\n\n'
+            output += extract_text(text, config)
             i += 1
             continue
 
@@ -118,38 +211,67 @@ def render_latex(paras):
             # If a swaram line is immediately followed by a sahityam line,
             # the they will automatically be rendered in the same table
             combo_flag = 1
+            # TODO: When cyclesperline > 1, check this condition for that many
+            #       cycles.
 
-        # Ideally, we should validate the swaram/sahityam against the taalam
-        # config before rendering
+        if kind == 'swaram':
+            chunks = extract_swaras(text, config)
+        elif kind == 'sahityam':
+            chunks = extract_sahityas(text, config)
+
+        # TODO: Validate the swaram/sahityam against the taalam config and
+        #       cyclesperline before rendering
         aksh0 = 0
         for table_pre, table_post, num_aksh in gen_latex_table_text(config):
-            if kind == 'swaram':
-                text = text.upper()
-                chunks = []
-                for chunk in text.split():
-                    if '.' in chunk:
-                        chunk = '\d{%s}' % chunk.replace('.', '')
-                    elif '\'' in chunk:
-                        chunk = '\\.{%s}' % chunk.replace('\'', '')
-                    chunks.append(chunk)
-                text = ' '.join(chunks)
-
-            output += table_pre + '\n'
-            output += '\t' + ' & '.join(text.split()[aksh0 : aksh0 + num_aksh])
-            if combo_flag:
-                output += ' \\\\\n'
-                sahityas = paras[i+1][2].split()[aksh0 : aksh0 + num_aksh]
-                sahityas = [' ' if s == '_' else s for s in sahityas]
-                output += '\t' + ' & '.join(sahityas)
-            output += '\n' + table_post + '\n\n'
-            aksh0 += num_aksh
+            if config['cyclesperline'] > 1:
+                output += table_pre + '\n\t'
+                for j in range(config['cyclesperline']):
+                    if j > 0:
+                        output += ' & '
+                    output += ' & '.join(extract_swaras(paras[i + (1+combo_flag)*j][2], config))  # Config should be the same
+                if combo_flag:
+                    output += '\\\\\n\t'
+                    for j in range(config['cyclesperline']):
+                        if j > 0:
+                            output += ' & '
+                        output += ' & '.join(extract_sahityas(paras[i + (1+combo_flag)*j + 1][2], config))  # Config should be the same
+                output += '\n' + table_post + '\n\n'
+            else:
+                output += table_pre + '\n'
+                output += '\t' + ' & '.join(chunks[aksh0 : aksh0 + num_aksh])
+                if combo_flag:
+                    output += ' \\\\\n'
+                    sahityas = extract_sahityas(paras[i+1][2], config)
+                    sahityas = sahityas[aksh0 : aksh0 + num_aksh]
+                    output += '\t' + ' & '.join(sahityas)
+                output += '\n' + table_post + '\n\n'
+                aksh0 += num_aksh
 
         if combo_flag:
-            i += 2
+            i += 2 * config['cyclesperline']
         else:
-            i += 1
+            i += config['cyclesperline']
 
-    return preamble, output
+    title_text = None
+    if 'title' in config:
+        # Should not matter which config; very last one should do fine
+        title_text = (r'\begin{center}{\bfseries \Large ' + config['title']
+                      + '}\end{center}\n\n')
+        if 'raagam' in config and 'taalam' in config:
+            title_text += ('Raagam: %s \hfill Taalam: %s'
+                           % (config['raagam'], config['taalam']))
+        elif 'raagam' in config:
+            title_text += 'Raagam: %s\n\n' % config['raagam']
+        elif 'taalam' in config:
+            title_text += 'Taalam: %s\n\n' % config['taalam']
+        if 'arohanam' in config and 'avarohanam' in config:
+            title_text += '\\\\'  # Assume at least raagam has been specified
+            aro = extract_swaras(config['arohanam'], config)
+            avaro = extract_swaras(config['avarohanam'], config)
+            title_text += ('Arohanam: %s \hfill Avarohanam: %s'
+                           % (' '.join(aro), ' '.join(avaro) + '\n\n'))
+
+    return preamble, output, title_text
 
 
 if __name__ == '__main__':
@@ -158,7 +280,7 @@ if __name__ == '__main__':
     md = f.read()
 
     paras = parse(md)
-    preamble, output = render_latex(paras)
+    preamble, output, title_text = render_latex(paras)
 
     print(r'\documentclass{article}')
     print(r'\usepackage[margin=1in]{geometry}')
@@ -166,5 +288,6 @@ if __name__ == '__main__':
     print(r'\usepackage{lmodern}')
     print(preamble)
     print(r'\begin{document}')
+    print(title_text)
     print(output)
     print(r'\end{document}')
