@@ -3,11 +3,20 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{notation}
 
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
 \begin{document}
 
-\begin{TriputaTalam}
-	S & R & G & $\vert$ & S & R & G & M & $\Vert$ \\
-	R & G & M & $\vert$ & R & G & M & P & $\Vert$
-\end{TriputaTalam}
+%\begin{TriputaTalam}
+%    S & R & G & $\vert$ & S & R & G & M & $\Vert$ \\
+%    R & G & M & $\vert$ & R & G & M & P & $\Vert$
+%\end{TriputaTalam}
+
+%\begin{RupakaTalam}
+\begin{tabularx}{\textwidth}{|| Y Y Y Y | Y Y Y Y | Y Y Y Y ||}
+	S & R & S & G & R & M & G & R & S & R & G & M \\
+	R & G & R & M & G & P & M & G & R & G & M & P
+\end{tabularx}
+%\end{RupakaTalam}
 
 \end{document}
