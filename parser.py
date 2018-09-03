@@ -109,16 +109,21 @@ def gen_latex_table_text(config):
             col_fmt = sanitize_pattern(config['patternstart'])
         else:
             col_fmt = ''
-        col_fmt += (part.replace('_', 'Y').replace(',', 'Y').replace(';', 'YY')
+        col_fmt += (part.replace('_', 'X[5]').replace(',', 'X[10]').replace(';', 'X[10]X[10]').replace('||', 'X[2]@{}$@{}X[2]').replace('|', 'X[2]@{}|@{}X[2]').replace('$', '||')
                     * config['cyclesperline'])
 
         # See https://tex.stackexchange.com/a/317543/56690 for top-align
-        table_pre = r'\begin{tabularx}{%g\textwidth}[t]{%s}' % (squeeze, col_fmt)
-        table_post = '\end{tabularx}'
-        num_aksharas = col_fmt.count('Y')
+        table_pre = r'\begin{tabu} to %g\textwidth[t]{%s}' % (squeeze, col_fmt)
+        table_post = '\end{tabu}'
+        num_aksharas = part.count(',') + 2 * part.count(';')
 
-        part_cols = [c for c in part.replace(';', ',,') if c in [',', '_']]
-        space_pos = [i for i, c in enumerate(part_cols) if c == '_']
+        part_cols = [c for c in part.replace(';', ',,').replace('||', '|') if c in [',', '_', '|']]
+        space_pos = []
+        for i, c in enumerate(part_cols):
+            if c == '_':
+                space_pos.append(i)
+            elif c == '|':
+                space_pos.extend([i-1, i-1])
 
         yield table_pre, table_post, num_aksharas, space_pos
 
@@ -191,10 +196,8 @@ def extract_text(text, config):
 
 
 def render_latex(paras):
-    preamble = (r'\usepackage{tabularx}' + '\n'
-                r'\usepackage{enumitem}' + '\n'
-                #r'\newcolumntype{Y}{>{\centering\arraybackslash}X}')
-                r'\newcolumntype{Y}{X}' + '\n')
+    preamble = (r'\usepackage{tabu}' + '\n'
+                r'\usepackage{enumitem}' + '\n')
     output = ''
 
     i = 0
