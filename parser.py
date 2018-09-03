@@ -88,7 +88,8 @@ def parse_config(config_line):
         partial_config[key] = float(val)
     elif key == 'cyclesperline':
         partial_config[key] = int(val)
-    elif key in ['title', 'raagam', 'taalam', 'arohanam', 'avarohanam']:
+    elif key in ['title', 'raagam', 'taalam', 'arohanam', 'avarohanam',
+                 'composer']:
         partial_config[key] = val
     else:
         raise ValueError('Unrecognized configuration option %s' % key)
@@ -164,7 +165,6 @@ def extract_text(text, config):
         return text + '\n\n'
 
     cmd_txt = text.split(None, maxsplit=1)
-    #print(cmd_txt)
     if len(cmd_txt) == 1:
         cmd = cmd_txt[0]
     else:
@@ -221,6 +221,7 @@ def render_latex(paras):
 
         # TODO: Validate the swaram/sahityam against the taalam config and
         #       cyclesperline before rendering
+        # TODO: Test line-splitting within a single taalam cycle
         aksh0 = 0
         for table_pre, table_post, num_aksh in gen_latex_table_text(config):
             if config['cyclesperline'] > 1:
@@ -256,7 +257,12 @@ def render_latex(paras):
     if 'title' in config:
         # Should not matter which config; very last one should do fine
         title_text = (r'\begin{center}{\bfseries \Large ' + config['title']
-                      + '}\end{center}\n\n')
+                      + '}\end{center}')
+        if 'composer' in config:
+            title_text += '\n'
+            title_text += (r'\begin{center}\textit{' + config['composer']
+                           + '}\end{center}')
+        title_text += '\n\n'
         if 'raagam' in config and 'taalam' in config:
             title_text += ('Raagam: %s \hfill Taalam: %s'
                            % (config['raagam'], config['taalam']))
