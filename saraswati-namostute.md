@@ -4,7 +4,7 @@ arohanam = s r2 m2 p d2 s
 avarohanam = s n2 d2 p m2 r2 s
 taalam = Rupakam
 composer = G. N. Balasubramaniam
-pattern =  , , , , | , , , , | , , , ,  ||
+pattern =  , , , , _ , , , , | , , , ,  ||
 cyclesperline = 2
 squeeze = 1
 

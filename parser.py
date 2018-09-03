@@ -10,7 +10,7 @@ import sys
 import re
 
 
-taalam_chars = '|,;+'
+taalam_chars = '|,;+_'
 swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
 default_config = {'squeeze': 1, 'italicize': 1, 'cyclesperline': 1}
 
@@ -109,7 +109,7 @@ def gen_latex_table_text(config):
             col_fmt = sanitize_pattern(config['patternstart'])
         else:
             col_fmt = ''
-        col_fmt += (part.replace(',', 'Y').replace(';', 'YY')
+        col_fmt += (part.replace('_', 'Y').replace(',', 'Y').replace(';', 'YY')
                     * config['cyclesperline'])
 
         # See https://tex.stackexchange.com/a/317543/56690 for top-align
@@ -117,7 +117,10 @@ def gen_latex_table_text(config):
         table_post = '\end{tabularx}'
         num_aksharas = col_fmt.count('Y')
 
-        yield table_pre, table_post, num_aksharas
+        part_cols = [c for c in part.replace(';', ',,') if c in [',', '_']]
+        space_pos = [i for i, c in enumerate(part_cols) if c == '_']
+
+        yield table_pre, table_post, num_aksharas, space_pos
 
 
 def extract_swaras(text, config):
@@ -190,8 +193,8 @@ def extract_text(text, config):
 def render_latex(paras):
     preamble = (r'\usepackage{tabularx}' + '\n'
                 r'\usepackage{enumitem}' + '\n'
-                r'\newcolumntype{Y}{>{\centering\arraybackslash}X}')
-                #r'\newcolumntype{Y}{C}')
+                #r'\newcolumntype{Y}{>{\centering\arraybackslash}X}')
+                r'\newcolumntype{Y}{X}' + '\n')
     output = ''
 
     i = 0
@@ -223,28 +226,43 @@ def render_latex(paras):
         #       cyclesperline before rendering
         # TODO: Test line-splitting within a single taalam cycle
         aksh0 = 0
-        for table_pre, table_post, num_aksh in gen_latex_table_text(config):
+        for table_params in gen_latex_table_text(config):
+            table_pre, table_post, num_aksh, space_pos = table_params
             if config['cyclesperline'] > 1:
                 output += table_pre + '\n\t'
                 for j in range(config['cyclesperline']):
                     if j > 0:
                         output += ' & '
-                    output += ' & '.join(extract_swaras(paras[i + (1+combo_flag)*j][2], config))  # Config should be the same
+                    swaras = extract_swaras(paras[i + (1+combo_flag)*j][2],
+                                            config) # Config should be the same
+                    for kprime, k in enumerate(space_pos):
+                        swaras.insert(k + kprime, '')
+                    output += ' & '.join(swaras)
                 if combo_flag:
                     output += '\\\\\n\t'
                     for j in range(config['cyclesperline']):
                         if j > 0:
                             output += ' & '
-                        output += ' & '.join(extract_sahityas(paras[i + (1+combo_flag)*j + 1][2], config))  # Config should be the same
+                        # Config should be the same
+                        sahityas = extract_sahityas(paras[i + (1+combo_flag)*j
+                                                          + 1][2], config)
+                        for kprime, k in enumerate(space_pos):
+                            sahityas.insert(k + kprime, '')
+                        output += ' & '.join(sahityas)
                 output += '\n' + table_post + '\n\n'
             else:
-                output += table_pre + '\n'
-                output += '\t' + ' & '.join(chunks[aksh0 : aksh0 + num_aksh])
+                output += table_pre + '\n\t'
+                chunks_ = chunks[aksh0 : aksh0 + num_aksh]
+                for kprime, k in enumerate(space_pos):
+                    chunks_.insert(k + kprime, '')
+                output += ' & '.join(chunks_)
                 if combo_flag:
-                    output += ' \\\\\n'
+                    output += ' \\\\\n\t'
                     sahityas = extract_sahityas(paras[i+1][2], config)
                     sahityas = sahityas[aksh0 : aksh0 + num_aksh]
-                    output += '\t' + ' & '.join(sahityas)
+                    for kprime, k in enumerate(space_pos):
+                        sahityas.insert(k + kprime, '')
+                    output += ' & '.join(sahityas)
                 output += '\n' + table_post + '\n\n'
                 aksh0 += num_aksh
 
