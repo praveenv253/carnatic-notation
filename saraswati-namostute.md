@@ -3,6 +3,7 @@ raagam = Saraswati
 arohanam = s r2 m2 p d2 s
 avarohanam = s n2 d2 p m2 r2 s
 taalam = Rupakam
+composer = G. N. Balasubramaniam
 pattern =  , , , , | , , , , | , , , ,  ||
 cyclesperline = 2
 squeeze = 1
@@ -43,18 +44,42 @@ p d r' s' n d p m r s n. d.
 dya _ _ _ _ _ pra _ de _ _ _
 >> \endenum
 
+>> \empty
+
+>> \bold Anupallavi
+
+>> \enum
+>> \item
+, , p d       , n d ,       p , , n
+_ _ Kha ra    _ dhr ta _   vee _ _ _
+m , , ,       d , p ,       d , s' ,
+na _ _ _      pu _ _ _      sta _ ka _
+, , d r'      , s' s' ,     s' s' n d
+_ _ Va ra     _ ma ni _     ma _ _ _
+p d r' s'     s' s' n d     p n m ,
+la _ _ _      lan _ _ _     kr _ ta _
+
+>> \item
+, , p d       , n d ,       p , , n
+_ _ Kha ra    _ dhr ta _   vee _ _ _
+m , , ,       d , p ,       d , s' ,
+na _ _ _      pu _ _ _      sta _ ka _
+, , r' m'      , r' s' ,     s' s' n d
+_ _ Va ra     _ ma ni _     ma _ _ _
+p d r' s'     n d p m       r s n. d.
+la _ _ _      lan _ _ _     kr _ ta _
+>> \endenum
+
 >> \bold Chittaswaram
 
-cyclesperline = 1
-squeeze = 0.7
+cyclesperline = 2
+squeeze = 1
 
 >> \enum
 >> \item
 s , r m       p d , p      m p d s'
->> \item
 p d s' ,      n d p m      r s n. d.
 >> \item
 s r m p       d s' r' m'   , r' s' n
->> \item
 , d p m       , r s r      , s n. d.
 >> \endenum
