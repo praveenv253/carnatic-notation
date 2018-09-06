@@ -4,6 +4,24 @@ from __future__ import print_function, division
 
 import re
 
+from latex_transliteration import translit_table
+
+
+def apply_iast_romanization(s):
+    chars = translit_table.keys()
+    simple_chars = [c for c in chars if len(c) == 1]
+    compound_chars = [c for c in chars if len(c) > 1]
+
+    # First replace all compound characters, then simple characters
+    for c in compound_chars:
+        s = re.sub(c, translit_table[c], s)
+
+    # Then replace all simple characters
+    for c in simple_chars:
+        s = re.sub(c, translit_table[c], s)
+
+    return s
+
 
 def gen_latex_table_text(config):
     """Generate the table environment for latex rendering."""
@@ -70,6 +88,9 @@ def extract_sahityas(text, config):
         sahityas = [' ' if s == '_' else r'\textit{' + s + '}' for s in chunks]
     else:
         sahityas = [' ' if s == '_' else s for s in chunks]
+
+    if config['iast'] == 'all' or config['iast'] == 'sahityam':
+        sahityas = [apply_iast_romanization(s) for s in sahityas]
 
     return sahityas
 
