@@ -63,16 +63,12 @@ def extract_swaras(text, config):
     # Add dots above and below for tara sthayi and mandra sthayi swaras
     swaras = []
     for swaram in text.split():
-        num = None
         if any(i in swaram for i in '123'):
-            num = re.findall(r'\d', swaram)[0]
-            swaram = swaram.replace(num, '')
+            swaram = re.sub(r'([123])', r'\\textsubscript{\1}', swaram)
         if '.' in swaram:
-            swaram = '\d{%s}' % swaram.replace('.', '')
+            swaram = re.sub(r'([a-zA-Z])\.', r'\\d{\1}', swaram)
         elif '\'' in swaram:
-            swaram = '\\.{%s}' % swaram.replace('\'', '')
-        if num:
-            swaram += r'\textsubscript{%s}' % num
+            swaram = re.sub(r'([a-zA-Z])\'', r'\\.{\1}', swaram)
 
         swaras.append(swaram)
 
