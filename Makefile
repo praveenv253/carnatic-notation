@@ -3,17 +3,20 @@
 mds = $(wildcard notation/*.md)  # Capture all .md files in the notation folder
 texs = $(mds:notation/%.md=build/%.tex)   # Substitute filetype to tex
 pdfs = $(mds:notation/%.md=output/%.pdf)  # Substitute filetype to pdf
+srcs = $(wildcard *.py)
 
 all: $(pdfs)
 
-output/%.pdf: build/%.tex  # Compile tex files in build/ into pdfs in output/
+# Compile tex files in build/ into pdfs in output/
+output/%.pdf: build/%.tex $(srcs)
 	cd build/
 	ls
 	pdflatex $(<F)
 	cd ..
 	mv build/$(@F) $@
 
-build/%.tex: notation/%.md  # Compile md files in notation/ to tex in build/
+# Compile md files in notation/ to tex in build/
+build/%.tex: notation/%.md $(srcs)
 	./render_latex.py $< --outfile $@
 
 .SECONDARY: $(texs)  # Prevent deletion of intermediate tex files
