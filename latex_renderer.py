@@ -45,11 +45,13 @@ def gen_latex_table_text(config):
 
         part_cols = [c for c in part.replace(';', ',,').replace('||', '|') if c in [',', '_', '|']]
         space_pos = []
+        j = 0  # Extra inserts produced by | and ||
         for i, c in enumerate(part_cols):
             if c == '_':
-                space_pos.append(i)
+                space_pos.append(i + j)
             elif c == '|':
-                space_pos.extend([i-1, i-1])
+                space_pos.extend([i+j, i+j+1])
+                j += 1
 
         yield table_pre, table_post, num_aksharas, space_pos
 
@@ -164,7 +166,8 @@ def render_latex(paras):
                     swaras = extract_swaras(paras[i + (1+combo_flag)*j][2],
                                             config) # Config should be the same
                     for kprime, k in enumerate(space_pos):
-                        swaras.insert(k + kprime, '')
+                        #swaras.insert(k + kprime, '')
+                        swaras.insert(k, '')
                     output += ' & '.join(swaras)
                 if combo_flag:
                     output += '\\\\\n\t'
@@ -175,21 +178,24 @@ def render_latex(paras):
                         sahityas = extract_sahityas(paras[i + (1+combo_flag)*j
                                                           + 1][2], config)
                         for kprime, k in enumerate(space_pos):
-                            sahityas.insert(k + kprime, '')
+                            #sahityas.insert(k + kprime, '')
+                            sahityas.insert(k, '')
                         output += ' & '.join(sahityas)
                 output += '\n' + table_post + '\n\n'
             else:
                 output += table_pre + '\n\t'
                 chunks_ = chunks[aksh0 : aksh0 + num_aksh]
                 for kprime, k in enumerate(space_pos):
-                    chunks_.insert(k + kprime, '')
+                    #chunks_.insert(k + kprime, '')
+                    chunks_.insert(k, '')
                 output += ' & '.join(chunks_)
                 if combo_flag:
                     output += ' \\\\\n\t'
                     sahityas = extract_sahityas(paras[i+1][2], config)
                     sahityas = sahityas[aksh0 : aksh0 + num_aksh]
                     for kprime, k in enumerate(space_pos):
-                        sahityas.insert(k + kprime, '')
+                        #sahityas.insert(k + kprime, '')
+                        sahityas.insert(k, '')
                     output += ' & '.join(sahityas)
                 output += '\n' + table_post + '\n\n'
                 aksh0 += num_aksh
