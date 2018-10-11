@@ -35,7 +35,7 @@ def gen_latex_table_text(config):
             col_fmt = sanitize_pattern(config['patternstart'])
         else:
             col_fmt = ''
-        col_fmt += (part.replace('_', 'X[10]').replace(',', 'X[10]').replace(';', 'X[10]X[10]').replace('||', 'X[2]@{}$@{}X[2]').replace('|', 'X[2]@{}|@{}X[2]').replace('$', '||')
+        col_fmt += (part.replace('_', 'X[%d]' % config['interbeatsep']).replace(',', 'X[10]').replace(';', 'X[10]X[10]').replace('||', 'X[2]@{}$@{}X[2]').replace('|', 'X[2]@{}|@{}X[2]').replace('$', '||')
                     * config['cyclesperline'])
 
         # See https://tex.stackexchange.com/a/317543/56690 for top-align
@@ -72,7 +72,7 @@ def extract_swaras(text, config):
         elif '\'' in swaram:
             swaram = re.sub(r'([a-zA-Z])\'', r'\\.{\1}', swaram)
 
-        swaras.append(swaram)
+        swaras.append('\mbox{' + swaram + '}')
 
     return swaras
 
@@ -89,6 +89,8 @@ def extract_sahityas(text, config):
 
     if config['iast'] == 'all' or config['iast'] == 'sahityam':
         sahityas = [apply_iast_romanization(s) for s in sahityas]
+
+    sahityas = ['\mbox{' + s + '}' for s in sahityas]
 
     return sahityas
 
