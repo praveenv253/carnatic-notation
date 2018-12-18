@@ -45,6 +45,7 @@ if __name__ == '__main__':
         print(r'\usepackage{lmodern}', file=outfile)
         print(preamble, file=outfile)
         print(r'\begin{document}', file=outfile)
+        #print(r'\fontsize{9pt}{9pt}\selectfont', file=outfile)
         print(title_text, file=outfile)
         print(output, file=outfile)
         print(r'\end{document}', file=outfile)

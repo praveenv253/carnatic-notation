@@ -24,3 +24,7 @@ build/%.tex: notation/%.md $(srcs)
 clean:
 	rm -rf build/*
 	rm -rf output/*
+
+# References:
+# https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html#Pattern-Rules
+# https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
