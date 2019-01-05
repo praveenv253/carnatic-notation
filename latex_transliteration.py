@@ -7,6 +7,7 @@
 # borrowed from: http://www.medieval.org/music/world/carnatic/shyama.html
 
 latex_sanskrit = {
+# translit_table = {
 # Vowels
     'a': 'a',
     'A': r'\={a}',
@@ -15,9 +16,11 @@ latex_sanskrit = {
     'u': 'u',
     'U': r'\={u}',
     'R': r'\d{r}',
-    'e': r'\={e}',
+    'e': 'e',        # Although the distinction between 'e' and '\={e}' doesn't really exist in Sanskrit, we retain this for neatness
+    'E': r'\={e}',
     'ai': 'ai',
-    'o': r'\={o}',
+    'o': 'o',        # Although the distinction between 'e' and '\={e}' doesn't really exist in Sanskrit, we retain this for neatness
+    'O': r'\={o}',
     'ow': 'ow',
     'au': 'au',
     'M': r'\d{m}',
@@ -52,13 +55,15 @@ latex_sanskrit = {
     'y': 'y',
     'r': 'r',
     'l': 'l',
+    'L': r'\d{l}',
     'v': 'v',
     'sh': '\\\'{s}',
-    'S': r'\.{s}',
+    'S': r'\.{s}',    # This is strictly the correct version, but 'Sh' is also allowed
     'Sh': r'\.{s}',
     's': 's',
     'h': 'h',
 }
+
 
 latex_sanskrit_capital = {
 # Vowels
@@ -93,7 +98,7 @@ latex_sanskrit_capital = {
     'HH': r'\d{H}',
     '\'': '\'',
 # Consonants
-# Note that half-letters before h are impossible
+# Note that many kinds of half-letters before h are impossible (and are likely never used in any case)
     'k': 'k',
     'kh': 'kh',
     'g': 'g',
@@ -122,6 +127,7 @@ latex_sanskrit_capital = {
     'y': 'y',
     'r': 'r',
     'l': 'l',
+    'lL': r'\d{l}',
     'v': 'v',
     'sh': '\\\'{s}',
     'sH': r'\.{s}',
@@ -131,12 +137,12 @@ latex_sanskrit_capital = {
     'Kh': 'Kh',
     'G': 'G',
     'Gh': 'Gh',
-    #'HN': r'\.{n}', # No capital version, since no words start with this letter
+    #'HN': r'\.{N}', # No capital version, since no words start with this letter
     'C': 'C',
     'Ch': 'Ch',
     'J': 'J',
     'Jh': 'Jh',
-    #'Hn': r'\~{n}', # No capital version, since no words start with this letter
+    #'Hn': r'\~{N}', # No capital version, since no words start with this letter
     'TT': r'\d{T}',
     'TTh': r'\d{T}h',
     'DD': r'\d{D}',
@@ -155,6 +161,7 @@ latex_sanskrit_capital = {
     'Y': 'Y',
     'R': 'R',
     'L': 'L',
+    'LL': r'\d{L}',
     'V': 'V',
     'Sh': '\\\'{S}',
     'SH': r'\.{S}',

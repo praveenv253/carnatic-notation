@@ -4,21 +4,21 @@ from __future__ import print_function, division
 
 import re
 
-from latex_transliteration import translit_table
+from latex_transliteration import latex_sanskrit, latex_sanskrit_capital
 
 
-def apply_iast_romanization(s):
+def apply_iast_romanization(s, translit_table):
     chars = translit_table.keys()
     simple_chars = [c for c in chars if len(c) == 1]
     compound_chars = [c for c in chars if len(c) > 1]
 
     # First replace all compound characters, then simple characters
     for c in compound_chars:
-        s = re.sub(c, translit_table[c], s)
+        s = re.sub(c, translit_table[c].replace('\\', '\\\\'), s)
 
     # Then replace all simple characters
     for c in simple_chars:
-        s = re.sub(c, translit_table[c], s)
+        s = re.sub(c, translit_table[c].replace('\\', '\\\\'), s)
 
     return s
 
@@ -82,13 +82,20 @@ def extract_sahityas(text, config):
 
     chunks = text.split()
 
-    if config['italicize']:
-        sahityas = [' ' if s == '_' else r'\textit{' + s + '}' for s in chunks]
-    else:
-        sahityas = [' ' if s == '_' else s for s in chunks]
-
     if config['iast'] == 'all' or config['iast'] == 'sahityam':
-        sahityas = [apply_iast_romanization(s) for s in sahityas]
+        if config['capitalize'] == 'all' or config['capitalize'] == 'sahityam':
+            translit_table = latex_sanskrit_capital
+        else:
+            translit_table = latex_sanskrit
+        sahityas = [apply_iast_romanization(s, translit_table)
+                    for s in chunks]
+    else:
+        sahityas = chunks
+
+    if config['italicize']:
+        sahityas = [' ' if s == '_' else r'\textit{' + s + '}' for s in sahityas]
+    else:
+        sahityas = [' ' if s == '_' else s for s in sahityas]
 
     sahityas = ['\mbox{' + s + '}' for s in sahityas]
 
@@ -122,6 +129,47 @@ def extract_text(text, config):
         raise ValueError('Unknown command \\%s' % cmd)
 
     return output
+
+
+def romanize_title_text(text, config):
+    if config['iast'] == 'all' or config['iast'] == 'title':
+        if config['capitalize'] == 'all' or config['capitalize'] == 'title':
+            translit_table = latex_sanskrit_capital
+        else:
+            translit_table = latex_sanskrit
+        text = apply_iast_romanization(text, translit_table)
+
+    return text
+
+
+def romanize_aro_text(config):
+    if config['iast'] == 'all' or config['iast'] == 'title':
+        if config['capitalize'] == 'all' or config['capitalize'] == 'title':
+            translit_table = latex_sanskrit_capital
+            text = 'Aarohanam Avarohanam'
+        else:
+            translit_table = latex_sanskrit
+            text = 'ArOhanam avarOhanam'
+        text = apply_iast_romanization(text, translit_table)
+    else:
+        text = 'Arohanam Avarohanam'
+
+    return text
+
+
+def romanize_ra_text(config):
+    if config['iast'] == 'all' or config['iast'] == 'title':
+        if config['capitalize'] == 'all' or config['capitalize'] == 'title':
+            translit_table = latex_sanskrit_capital
+            text = 'Raagam TaalLam'
+        else:
+            translit_table = latex_sanskrit
+            text = 'rAgam tALam'
+        text = apply_iast_romanization(text, translit_table)
+    else:
+        text = 'Raagam Taalam'
+
+    return text
 
 
 def render_latex(paras):
@@ -210,25 +258,34 @@ def render_latex(paras):
     title_text = None
     if 'title' in config:
         # Should not matter which config; very last one should do fine
-        title_text = (r'\begin{center}{\bfseries \Large ' + config['title']
+        title = romanize_title_text(config['title'], config)
+        title_text = (r'\begin{center}{\bfseries \Large ' + title
                       + '}\end{center}')
         if 'composer' in config:
+            composer = romanize_title_text(config['composer'], config)
             title_text += '\n'
-            title_text += (r'\begin{center}\textit{' + config['composer']
+            title_text += (r'\begin{center}\textit{' + composer
                            + '}\end{center}')
         title_text += '\n\n'
+        ra_ta_text = romanize_ra_text(config).split()
         if 'raagam' in config and 'taalam' in config:
-            title_text += ('Raagam: %s \hfill Taalam: %s'
-                           % (config['raagam'], config['taalam']))
+            raagam = romanize_title_text(config['raagam'], config)
+            taalam = romanize_title_text(config['taalam'], config)
+            title_text += ('%s: %s \hfill %s: %s'
+                           % (ra_ta_text[0], raagam, ra_ta_text[1], taalam))
         elif 'raagam' in config:
-            title_text += 'Raagam: %s\n\n' % config['raagam']
+            raagam = romanize_title_text(config['raagam'], config)
+            title_text += '%s: %s\n\n' % (ra_ta_text[0], raagam)
         elif 'taalam' in config:
-            title_text += 'Taalam: %s\n\n' % config['taalam']
+            taalam = romanize_title_text(config['taalam'], config)
+            title_text += '%s: %s\n\n' % (ra_ta_text[1], taalam)
         if 'arohanam' in config and 'avarohanam' in config:
             title_text += '\\\\'  # Assume at least raagam has been specified
+            aro_avaro_text = romanize_aro_text(config).split()
             aro = extract_swaras(config['arohanam'], config)
             avaro = extract_swaras(config['avarohanam'], config)
-            title_text += ('Arohanam: %s \hfill Avarohanam: %s'
-                           % (' '.join(aro), ' '.join(avaro) + '\n\n'))
+            title_text += ('%s: %s \hfill %s: %s'
+                           % (aro_avaro_text[0], ' '.join(aro),
+                              aro_avaro_text[1], ' '.join(avaro) + '\n\n'))
 
     return preamble, output, title_text

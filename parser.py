@@ -12,7 +12,7 @@ import sys
 taalam_chars = '|,;+_'
 swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
 default_config = {'squeeze': 1, 'italicize': 1, 'cyclesperline': 1,
-                  'iast': 'none', 'interbeatsep': 10}
+                  'iast': 'none', 'capitalize': 'none', 'interbeatsep': 10}
 
 
 def parse(md):
@@ -89,7 +89,7 @@ def parse_config(config_line):
     elif key in ['cyclesperline', 'interbeatsep']:
         partial_config[key] = int(val)
     elif key in ['title', 'raagam', 'taalam', 'arohanam', 'avarohanam',
-                 'composer', 'iast']:
+                 'composer', 'iast', 'capitalize']:
         partial_config[key] = val
     else:
         raise ValueError('Unrecognized configuration option %s' % key)
