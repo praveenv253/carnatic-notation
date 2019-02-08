@@ -30,13 +30,32 @@ def gen_latex_table_text(config):
         raise ValueError('Cannot have "+" in pattern when cyclesperline > 1.')
 
     squeeze = config['squeeze']
+    ibs = config['interbeatsep']
+    ibs2 = ibs // 2
     for part in config['pattern'].split('+'):
         if 'patternstart' in config:
             col_fmt = sanitize_pattern(config['patternstart'])
         else:
             col_fmt = ''
-        col_fmt += (part.replace('_', 'X[%d]' % config['interbeatsep']).replace(',', 'X[10]').replace(';', 'X[10]X[10]').replace('||', 'X[2]@{}$@{}X[2]').replace('|', 'X[2]@{}|@{}X[2]').replace('$', '||')
-                    * config['cyclesperline'])
+
+        col_fmt_part = part.replace('_', 'X[%d]' % ibs)
+        col_fmt_part = col_fmt_part.replace(',', 'X[10]').replace(';', 'X[10]X[10]')
+
+        if col_fmt_part.startswith('||'):
+            col_fmt_part = '##@{}X[%d]' % ibs2 + col_fmt_part[2:]
+        elif col_fmt_part.startswith('|'):
+            col_fmt_part = '#@{}X[%d]' % ibs2 + col_fmt_part[1:]
+
+        if col_fmt_part.endswith('||'):
+            col_fmt_part = col_fmt_part[:-2] + 'X[%d]@{}##' % ibs2
+        elif col_fmt_part.endswith('|'):
+            col_fmt_part = col_fmt_part[:-1] + 'X[%d]@{}#' % ibs2
+
+        col_fmt_part = col_fmt_part.replace('||', 'X[%d]@{}##@{}X[%d]' % (ibs2, ibs2))
+        col_fmt_part = col_fmt_part.replace('|', 'X[%d]@{}#@{}X[%d]' % (ibs2, ibs2))
+        col_fmt_part = col_fmt_part.replace('##', '||').replace('#', '|')
+
+        col_fmt += col_fmt_part * config['cyclesperline']
 
         # See https://tex.stackexchange.com/a/317543/56690 for top-align
         table_pre = r'\begin{tabu} to %g\textwidth[t]{%s}' % (squeeze, col_fmt)
@@ -50,8 +69,13 @@ def gen_latex_table_text(config):
             if c == '_':
                 space_pos.append(i + j)
             elif c == '|':
-                space_pos.extend([i+j, i+j+1])
-                j += 1
+                if i == 0:
+                    space_pos.append(i + j)
+                elif i == len(part_cols) - 1:
+                    space_pos.append(i + j)
+                else:
+                    space_pos.extend([i+j, i+j+1])
+                    j += 1
 
         yield table_pre, table_post, num_aksharas, space_pos
 
