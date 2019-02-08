@@ -6,8 +6,8 @@ taalam = Aadi
 composer = Muttuswami Deekshitar
 pattern =  , , , , _ , , , , _ , , , , _ , , , , | + , , , , _ , , , , | , , , , _ , , , , ||
 cyclesperline = 1
-squeeze = 0.8
-interbeatsep = 2
+squeeze = 1
+interbeatsep = 20
 iast = all
 capitalize = all
 
@@ -19,29 +19,37 @@ capitalize = all
 >> \item
 g , , ,         , , r ,         , , s ,         s , s n.        p. , r ,        , , s ,         r , , ,         s n. s r
 Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
-#>> \item
-#g  sr   g r     , s     s  sn.  p. r    , s     r ,     sn. sr
+>> \item
+g , s r         g , r ,         , , s ,         s , s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#gp gg   rs rg   rr sn.  sr sn.  p. r    , s     r ,     sn. sr
+>> \item
+g p g g         r s r g         r r s n.        s r s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#g  p    , g     , r     s  sn.  p. r    , s     r ,     sn. sr
+>> \item
+g , p ,         , , g ,         , , r ,         s , s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#g p     n p     g r     sr sn.  p. r    , s     r ,     sn. sr
+>> \item
+g , p ,         n , p ,         g , r ,         s , s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#gg pp   nn pp   gg rr   sr sn.  p. r    , s     r ,     sn. sr
+>> \item
+g g p p         n n p p         g g r r         s r s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#gp ns'  r' s'n  pg r    sr sn.  p. r    , s     r ,     sn. sr
+>> \item
+g p n s'        r' , s' n       p g r ,         s r s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ pi _        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _ tA    _ pi    ga Na   pa tim  _ bha   je _    ham _
-#>> \item
-#gp ns'  r'g' g'r' s'n pp gr sn. p. r    , s     r ,     sn. sr
+>> \item
+g p n s'        r' g' g' r'     s' n p p        g r s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ _ pi        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _    tA   _  {-}pi ga Na  pa tim  _ bha   je _    ham _
-#>> \item
-#gp ns'  r'g' p'g' r's' np gr sn. p. r   , s     r ,     sn. sr
+>> \item
+g p n s'        r' g' p' g'     r' s' n p       g r s n.        p. , r ,        , , s ,         r , , ,         s n. s r
+Vaa _ _ _       _ _ taa _       _ _ _ pi        ga _ nNa _      pa _ tim _      _ _ bha _       je _ _ _        ham _ _ _
 #vA _    _    tA   _   {-}pi ga Na  pa tim _ bha   je _    ham _
 >> \endenum
 #
