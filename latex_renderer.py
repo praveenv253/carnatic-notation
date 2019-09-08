@@ -34,7 +34,7 @@ def gen_latex_table_text(config):
     ibs2 = ibs // 2
     for part in config['pattern'].split('+'):
         if 'patternstart' in config:
-            col_fmt = sanitize_pattern(config['patternstart'])
+            col_fmt = config['patternstart']
         else:
             col_fmt = ''
 
@@ -44,12 +44,12 @@ def gen_latex_table_text(config):
         if col_fmt_part.startswith('||'):
             col_fmt_part = '##@{}X[%d]' % ibs2 + col_fmt_part[2:]
         elif col_fmt_part.startswith('|'):
-            col_fmt_part = '#@{}X[%d]' % ibs2 + col_fmt_part[1:]
+            col_fmt_part = '##[white]@{}X[%d]' % ibs2 + col_fmt_part[1:]
 
         if col_fmt_part.endswith('||'):
             col_fmt_part = col_fmt_part[:-2] + 'X[%d]@{}##' % ibs2
         elif col_fmt_part.endswith('|'):
-            col_fmt_part = col_fmt_part[:-1] + 'X[%d]@{}#' % ibs2
+            col_fmt_part = col_fmt_part[:-1] + 'X[%d]@{}#[white]#' % ibs2
 
         col_fmt_part = col_fmt_part.replace('||', 'X[%d]@{}##@{}X[%d]' % (ibs2, ibs2))
         col_fmt_part = col_fmt_part.replace('|', 'X[%d]@{}#@{}X[%d]' % (ibs2, ibs2))
@@ -58,7 +58,7 @@ def gen_latex_table_text(config):
         col_fmt += col_fmt_part * config['cyclesperline']
 
         # See https://tex.stackexchange.com/a/317543/56690 for top-align
-        table_pre = r'\begin{tabu} to %g\textwidth[t]{%s}' % (squeeze, col_fmt)
+        table_pre = r'\begin{tabu} to %g\linewidth[t]{%s}' % (squeeze, col_fmt)
         table_post = '\end{tabu}'
         num_aksharas = part.count(',') + 2 * part.count(';')
 
@@ -198,7 +198,8 @@ def romanize_ra_text(config):
 
 def render_latex(paras):
     preamble = (r'\usepackage{tabu}' + '\n'
-                r'\usepackage{enumitem}' + '\n')
+                r'\usepackage{enumitem}' + '\n'
+                r'\usepackage{xcolor}' + '\n')
     output = ''
 
     i = 0

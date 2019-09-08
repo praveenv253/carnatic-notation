@@ -19,7 +19,7 @@ latex_sanskrit = {
     'e': 'e',        # Although the distinction between 'e' and '\={e}' doesn't really exist in Sanskrit, we retain this for neatness
     'E': r'\={e}',
     'ai': 'ai',
-    'o': 'o',        # Although the distinction between 'e' and '\={e}' doesn't really exist in Sanskrit, we retain this for neatness
+    'o': 'o',        # Although the distinction between 'o' and '\={o}' doesn't really exist in Sanskrit, we retain this for neatness
     'O': r'\={o}',
     'ow': 'ow',
     'au': 'au',
