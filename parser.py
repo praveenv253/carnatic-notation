@@ -11,7 +11,7 @@ import sys
 
 taalam_chars = '|,;+_'
 swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
-default_config = {'squeeze': 1, 'italicize': 1, 'cyclesperline': 1,
+default_config = {'squeeze': 1, 'italicize': True, 'cyclesperline': 1,
                   'iast': 'none', 'capitalize': 'none', 'interbeatsep': 10}
 
 
@@ -88,6 +88,8 @@ def parse_config(config_line):
         partial_config[key] = float(val)
     elif key in ['cyclesperline', 'interbeatsep']:
         partial_config[key] = int(val)
+    elif key == 'italicize':
+        partial_config[key] = (val.lower() == 'true')
     elif key in ['title', 'raagam', 'taalam', 'arohanam', 'avarohanam',
                  'composer', 'iast', 'capitalize']:
         partial_config[key] = val
