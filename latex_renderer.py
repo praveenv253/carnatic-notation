@@ -117,9 +117,9 @@ def extract_sahityas(text, config):
         sahityas = chunks
 
     if config['italicize']:
-        sahityas = [' ' if s == '_' else r'\textit{' + s + '}' for s in sahityas]
+        sahityas = ['--' if s == '_' else r'\textit{' + s + '}' for s in sahityas]
     else:
-        sahityas = [' ' if s == '_' else s for s in sahityas]
+        sahityas = ['--' if s == '_' else s for s in sahityas]
 
     sahityas = ['\mbox{' + s + '}' for s in sahityas]
 
@@ -130,29 +130,56 @@ def extract_text(text, config):
     """Extract textual elements and apply formatting if any."""
 
     if not text.startswith('\\'):
-        return text + '\n\n'
+        return romanize_general_text(text, config) + '\n\n'
 
     cmd_txt = text.split(None, maxsplit=1)
     if len(cmd_txt) == 1:
         cmd = cmd_txt[0]
     else:
         cmd, txt = cmd_txt
+        txt = romanize_general_text(txt, config)
     cmd = cmd[1:]  # Remove backslash
 
     if cmd == 'bold':
         output = r'\textbf{' + txt + '}\n\n'
+    elif cmd == 'section':
+        output = r'\subsubsection*{' + txt + '}\n\n'
     elif cmd == 'enum':
         output = r'\begin{enumerate}[label=\arabic*),leftmargin=*]' + '\n'
     elif cmd == 'item':
-        output = r'\item'
+        # Indicate to Latex that this is a very nice place to break a page
+        output = r'\pagebreak[3]' + '\n'
+        output += r'\item' + '\n'
     elif cmd == 'endenum':
         output = r'\end{enumerate}' + '\n\n'
+        # Indicate to Latex that this is a very nice place to break a page
+        output += r'\pagebreak[3]' + '\n\n'
     elif cmd == 'empty':
-        output = '\\ \n\n'
+        output = '\medskip\n\n'
+    elif cmd == 'finish':
+        # Indicate to Latex that this is a very bad place to break a page
+        output = r'\nopagebreak[3]' + '\n'
+        output += r'\hfill '
+        #if config['italicize']:
+        #    output += r'\textit{' + txt + '}\n\n'
+        #else:
+        #    output += '' + txt + '\n\n'
+        output += '' + txt + '\n\n'
     else:
         raise ValueError('Unknown command \\%s' % cmd)
 
     return output
+
+
+def romanize_general_text(text, config):
+    if config['iast'] == 'all' or config['iast'] == 'text':
+        if config['capitalize'] == 'all' or config['capitalize'] == 'text':
+            translit_table = latex_sanskrit_capital
+        else:
+            translit_table = latex_sanskrit
+        text = apply_iast_romanization(text, translit_table)
+
+    return text
 
 
 def romanize_title_text(text, config):
