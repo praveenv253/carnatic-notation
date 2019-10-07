@@ -166,7 +166,7 @@ def extract_text(text, config):
         #    output += r'\textit{' + txt + '}\n\n'
         #else:
         #    output += '' + txt + '\n\n'
-        output += '' + txt + '\n\n'
+        output += txt + '\\hspace{%g \\linewidth}\n\n' % (1 - config['squeeze'])
     else:
         raise ValueError('Unknown command \\%s' % cmd)
 
