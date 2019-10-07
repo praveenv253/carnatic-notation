@@ -143,7 +143,9 @@ def extract_text(text, config):
     if cmd == 'bold':
         output = r'\textbf{' + txt + '}\n\n'
     elif cmd == 'section':
-        output = r'\subsubsection*{' + txt + '}\n\n'
+        # Indicate to Latex that this is a very nice place to break a page
+        output = r'\pagebreak[3]' + '\n\n'
+        output += r'\subsubsection*{' + txt + '}\n\n'
     elif cmd == 'enum':
         output = r'\begin{enumerate}[label=\arabic*),leftmargin=*]' + '\n'
     elif cmd == 'item':

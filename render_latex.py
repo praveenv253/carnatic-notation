@@ -39,7 +39,11 @@ if __name__ == '__main__':
     if args.bare:
         print(output, file=outfile)
     else:
-        print(r'\documentclass{article}', file=outfile)
+        # Pick up the config from the first para
+        # Any para will do since we only need global configs
+        config = paras[0][-1]
+        print(r'\documentclass[%s,%dpt]{article}'
+              % (config['papersize'], config['fontsize']), file=outfile)
         print(r'\usepackage[margin=1in]{geometry}', file=outfile)
         print(r'\usepackage{parskip}', file=outfile)
         print(r'\usepackage{lmodern}', file=outfile)
