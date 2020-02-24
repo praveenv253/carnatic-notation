@@ -10,6 +10,7 @@ squeeze = 1
 interbeatsep = 15
 iast = all
 capitalize = all
+papersize = letterpaper
 
 #>> \empty
 >> \section Pallavi
