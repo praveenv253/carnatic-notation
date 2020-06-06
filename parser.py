@@ -11,9 +11,16 @@ import sys
 
 taalam_chars = '|,;+_'
 swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
-default_config = {'squeeze': 1, 'italicize': True, 'cyclesperline': 1,
-                  'iast': 'none', 'capitalize': 'none', 'interbeatsep': 10,
-                  'papersize': 'a4paper', 'fontsize': 10}
+default_config = {
+    'squeeze': 1,
+    'italicize': True,
+    'cyclesperline': 1,
+    'iast': 'none',
+    'capitalize': 'none',
+    'interbeatsep': 10,
+    'papersize': 'a4paper',
+    'fontsize': 10
+}
 
 
 def parse(md):
