@@ -2,77 +2,74 @@ title = Saraswati Namostute
 raagam = Saraswati
 arohanam = s r2 m2 p d2 s'
 avarohanam = s' n2 d2 p m2 r2 s
-taalam = Rupakam
-composer = G. N. Balasubramaniam
-pattern =  , , , , _ , , , , | , , , ,  ||
+taalam = Roopakam
+composer = G.\ N.\ Baalasubramaniam
+pattern =  , , , , _ , , , , | , , , , ||
 cyclesperline = 1
-squeeze = 0.6
+squeeze = 0.7
+iast = all
+capitalize = all
 
->> \empty
-
->> \bold Pallavi
+>> \section Pallavi
 
 >> \enum
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa - ra -      - - swa -      ti - - -
+Sa - ra -      - - sva -      ti - - -
 p m n d        p m p ,        d , , ,
 na - mo -      - - stu -      te - - -
 d , s' ,       n , d ,        , , p ,
-sha - - -      ra - de -      - - vi -
+shaa - - -     ra - de -      - - vi -
 p , , ,        , , p m        r s n. d.
-dya - - -      - - pra -      de - - -
+dyaa - - -     - - pra -      de - - -
 
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa - ra -      - - swa -      ti - - -
+Sa - ra -      - - sva -      ti - - -
 p m p d        s' , n ,       d , , ,
 na - mo -      - - stu -      te - - -
 s' d r' s'     n , d ,        , , p m
-sha - - -      ra - de -      - - vi -
+shaa - - -     ra - de -      - - vi -
 p d n d        p d p m        r s n. d.
-dya - - -      - - pra -      de - - -
+dyaa - - -     - - pra -      de - - -
 
 >> \item
 s , r ,        , , p m        p m r s
-Sa - ra -      - - swa -      ti - - -
+Sa - ra -      - - sva -      ti - - -
 p m p d        s' , n ,       d , , ,
 na - mo -      - - stu -      te - - -
 s' r' m' r'    p' m' r' s'    n d p m
-sha - - -      ra - de -      - - vi -
+shaa - - -     ra - de -      - - vi -
 p d r' s'      n d p m        r s n. d.
-dya - - -      - - pra -      de - - -
+dyaa - - -     - - pra -      de - - -
 >> \endenum
 
->> \empty
-
->> \bold Anupallavi
+>> \section Anupallavi
 
 >> \enum
 >> \item
 , , p d        , n d ,        p , , ds
-- - Kha ra     - dhr ta -     vee - - -
+- - Kha ra     - dhrR ta -    vee - - -
 dp m m ,       d , p ,        d , s' ,
-na - - -       pu - - -       sta - ka -
+nNaa - - -     pu - - -       sta - ka -
 , , d r'       , s' s' ,      s' s' n d
-- - Va ra      - ma ni -      ma - - -
+- - Va ra      - ma nNi -     maa - - -
 p d r' s'      s' s' n d      p n m ,
-la - - -       lan - - -      kr - ta -
+laa - - -      laHN - - -     krR - ta -
 
 >> \item
 , , p d        , n d ,        p , , ds
-- - Kha ra     - dhr ta -     vee - - -
+- - Kha ra     - dhrR ta -    vee - - -
 dp m m ,       d , p ,        d , s' ,
-na - - -       pu - - -       sta - ka -
+nNaa - - -     pu - - -       sta - ka -
 , , r' m'      , r' s' ,      s' s' n d
-- - Va ra      - ma ni -      ma - - -
+- - Va ra      - ma nNi -     maa - - -
 p d r' s'      n d p m        r s n. d.
-la - - -       lan - - -      kr - ta -
+laa - - -      laHN - - -     krR - ta -
+>> \finish (Cittaswaram; Saraswati)
 >> \endenum
 
->> \empty
-
->> \bold Chittaswaram
+>> \section Chittaswaram
 
 >> \enum
 >> \item
@@ -83,41 +80,39 @@ s r m p        d s' r' m'     , r' s' n
 , d p m        , r s r        , s n. d.
 >> \endenum
 
->> \empty
-
->> \bold Charanam
+>> \section CaranNam
 
 >> \enum
 >> \item
 , , p d        , p m ,        r s r ,
 - - Na ra      - ha ri -      su - ta -
 r m p d        p m r ,        r , s ,
-vi - dhi -     la - - -       li - ta -
+vi - dhi -     laa - - -      lLi - ta -
 
 >> \item
 , , sr sr      , n. d. ,      s , s ,
-- - Na va      - ma ni -      yu - ta -
+- - Na va      - ma nNi -     yu - ta -
 , , r ,        , p m ,        p , , ,
-- - Kam -      - bhu ga -     le - - -
+- - kam -      - bhu ga -     lLe - - -
 
 >> \item
 , , p d        , n d ,        p dn dp p
 - - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-- - pa da      - yu ga -      le - - -
+- - pa da      - yu ga -      lLe - - -
 , , d r'       s' , , ,       n , d ,
-- - Su -       dha - - -      ka - ra -
+- - Su -       dhaa - - -     ka - ra -
 p d r' s'      s' d n d       dp p p ,
-ka - ma -      dha - va -     le - - -
+ka - ma -      dha - va -     lLe - - -
 
 >> \item
 , m p d        , n d ,        p dn dp p
 - - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-- - pa da      - yu ga -      le - - -
+- - pa da      - yu ga -      lLe - - -
 , , r' m'      r' r' s' ,     n , d ,
-- - Su -       - dha - -      ka - ra -
+- - Su -       - dhaa - -     ka - ra -
 p d r' s'      n d p m        r s n. d.
-ka - ma -      dha - va -     le - - -
+ka - ma -      dha - va -     lLe - - -
+>> \finish (Cittaswaram; Saraswati)
 >> \endenum
->> (Chittaswaram)
