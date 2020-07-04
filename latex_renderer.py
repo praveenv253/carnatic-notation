@@ -283,7 +283,7 @@ def parse_early_ending(text, config):
 def render_latex(paras):
     preamble = (r'\usepackage{tabu}' + '\n'
                 r'\usepackage{enumitem}' + '\n'
-                r'\usepackage{xcolor}' + '\n')
+                r'\usepackage[dvipsnames]{xcolor}' + '\n')
     output = ''
 
     i = 0

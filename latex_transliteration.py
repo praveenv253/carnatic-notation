@@ -130,7 +130,7 @@ latex_sanskrit_capital = {
     'lL': r'\d{l}',
     'v': 'v',
     'sh': '\\\'{s}',
-    'sH': r'\.{s}',
+    'sH': r'\d{s}',
     's': 's',
     'h': 'h',
     'K': 'K',
@@ -164,7 +164,7 @@ latex_sanskrit_capital = {
     'LL': r'\d{L}',
     'V': 'V',
     'Sh': '\\\'{S}',
-    'SH': r'\.{S}',
+    'SH': r'\d{S}',
     'S': 'S',
     'H': 'H',
 }
