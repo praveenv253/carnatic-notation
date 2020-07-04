@@ -50,6 +50,8 @@ def gen_latex_table_text(config):
             col_fmt_part = col_fmt_part[:-2] + 'X[%d]@{}##' % ibs2
         elif col_fmt_part.endswith('|'):
             col_fmt_part = col_fmt_part[:-1] + 'X[%d]@{}#[white]#' % ibs2
+        elif col_fmt_part.endswith('*'):
+            col_fmt_part = col_fmt_part[:-1] + 'X[%d]@{}#[white]#[white]' % ibs2
 
         col_fmt_part = col_fmt_part.replace('||', 'X[%d]@{}##@{}X[%d]' % (ibs2, ibs2))
         col_fmt_part = col_fmt_part.replace('|', 'X[%d]@{}#@{}X[%d]' % (ibs2, ibs2))
@@ -62,7 +64,8 @@ def gen_latex_table_text(config):
         table_post = '\end{tabu}'
         num_aksharas = part.count(',') + 2 * part.count(';')
 
-        part_cols = [c for c in part.replace(';', ',,').replace('||', '|') if c in [',', '_', '|']]
+        part = part.replace(';', ',,').replace('*', '|').replace('||', '|')
+        part_cols = [c for c in part if c in [',', '_', '|']]
         space_pos = []
         j = 0  # Extra inserts produced by | and ||
         for i, c in enumerate(part_cols):
@@ -91,10 +94,18 @@ def extract_swaras(text, config):
     for swaram in text.split():
         if any(i in swaram for i in '123'):
             swaram = re.sub(r'([123])', r'\\textsubscript{\1}', swaram)
-        if '.' in swaram:
+        if '..' in swaram:
+            # Denote anumandra sthayi using an underbar. There is no simple
+            # way to render a double dot under a given letter
+            swaram = re.sub(r'([a-zA-Z])\.\.', r'\\b{\1}', swaram)
+        elif '\'\'' in swaram:
+            swaram = re.sub(r'([a-zA-Z])\'', r'\\"{\1}', swaram)
+        elif '.' in swaram:
             swaram = re.sub(r'([a-zA-Z])\.', r'\\d{\1}', swaram)
         elif '\'' in swaram:
             swaram = re.sub(r'([a-zA-Z])\'', r'\\.{\1}', swaram)
+        elif swaram == '_':  # Blank swaram
+            swaram = ''
 
         swaras.append('\mbox{' + swaram + '}')
 
@@ -111,15 +122,18 @@ def extract_sahityas(text, config):
             translit_table = latex_sanskrit_capital
         else:
             translit_table = latex_sanskrit
-        sahityas = [apply_iast_romanization(s, translit_table)
-                    for s in chunks]
-    else:
-        sahityas = chunks
+        chunks = [apply_iast_romanization(s, translit_table) for s in chunks]
 
-    if config['italicize']:
-        sahityas = ['--' if s == '_' else r'\textit{' + s + '}' for s in sahityas]
-    else:
-        sahityas = ['--' if s == '_' else s for s in sahityas]
+    sahityas = []
+    for s in chunks:
+        if s == '_':
+            sahityas.append('')
+        elif s == '-':
+            sahityas.append('--')
+        elif config['italicize']:
+            sahityas.append(r'\textit{' + s + '}')
+        else:
+            sahityas.append(s)
 
     sahityas = ['\mbox{' + s + '}' for s in sahityas]
 
@@ -225,6 +239,47 @@ def romanize_ra_text(config):
     return text
 
 
+def parse_early_ending(text, config):
+    if not text.endswith(r'\\'):
+        return text, config, 0
+
+    pattern = config['pattern']
+    chunks = text.split()[:-1]  # Remove the trailing '\\'
+    num_chunks = len(chunks)
+
+    # Count out all the aksharas used up so far, then count out the number of
+    # remaining aksharas in the current line of the taalam pattern
+    total_aksh = pattern.count(',')
+    if num_chunks >= total_aksh:
+        raise ValueError('Bad early ending!')
+    start = 0
+    for _ in range(num_chunks):
+        start = pattern.index(',', start) + 1
+    # `start` now contains the first index after `num_chunks` commas
+    # Next, find the number of remaining commas (i.e., aksharas) until first
+    # occurrence of '+' or until the end of the pattern
+    try:
+        stop = pattern.index('+', start)
+    except ValueError:
+        stop = len(pattern)
+    num_aksh_to_fill = pattern[start:stop].count(',')
+
+    # Extend the current line
+    chunks.extend(['_',] * num_aksh_to_fill)
+
+    # Update the taalam pattern to truncate it until the end of the current line
+    reduced_pattern = pattern[:stop]
+    # If there are any table separators after the last printed akshara, don't
+    # render them
+    reduced_pattern = (reduced_pattern[:start]
+                       + reduced_pattern[start:].replace('||', '*').replace('|', '*'))
+
+    updated_config = config.copy()
+    updated_config['pattern'] = reduced_pattern
+
+    return ' '.join(chunks), updated_config, num_aksh_to_fill
+
+
 def render_latex(paras):
     preamble = (r'\usepackage{tabu}' + '\n'
                 r'\usepackage{enumitem}' + '\n'
@@ -240,6 +295,7 @@ def render_latex(paras):
             output += extract_text(text, config)
             i += 1
             continue
+        # Only 'swaram' and 'sahityam' kinds left now
 
         combo_flag = 0
         if (i < len(paras) - 1   # Relying on short-circuiting here
@@ -250,6 +306,19 @@ def render_latex(paras):
             combo_flag = 1
             # TODO: When cyclesperline > 1, check this condition for that many
             #       cycles.
+
+        # If the line uses early ending (demarcated by '\\'), then fill the
+        # remaining space with blanks, per the taalam config.
+        # Only makes sense for swaram and sahityam kinds (which should be all
+        # that's left now)
+        text, config, num_aksh_to_fill = parse_early_ending(text, config)
+        if num_aksh_to_fill and combo_flag:
+            if paras[i+1][2].endswith(r'\\'):
+                paras[i+1] = list(paras[i+1])
+                chunks = paras[i+1][2][:-2].split()
+                chunks.extend(['_',] * num_aksh_to_fill)
+                paras[i+1][2] = ' '.join(chunks)
+                paras[i+1] = tuple(paras[i+1])
 
         if kind == 'swaram':
             chunks = extract_swaras(text, config)

@@ -9,8 +9,8 @@ from __future__ import print_function, division
 import sys
 
 
-taalam_chars = '|,;+_'
-swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;'
+taalam_chars = '|,;+_*'
+swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;_\\'
 default_config = {
     'squeeze': 1,
     'italicize': True,
@@ -56,7 +56,7 @@ def parse(md):
             except ValueError as e:
                 print('Error in line %d: %s' % (i, line_))
                 print(e)
-                sys.exit()
+                sys.exit(1)
             else:
                 config.update(partial_config)
             continue
