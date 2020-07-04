@@ -15,33 +15,33 @@ squeeze = 0.6
 >> \enum
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa _ ra _      _ _ swa _      ti _ _ _
+Sa - ra -      - - swa -      ti - - -
 p m n d        p m p ,        d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 d , s' ,       n , d ,        , , p ,
-sha _ _ _      ra _ de _      _ _ vi _
+sha - - -      ra - de -      - - vi -
 p , , ,        , , p m        r s n. d.
-dya _ _ _      _ _ pra _      de _ _ _
+dya - - -      - - pra -      de - - -
 
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa _ ra _      _ _ swa _      ti _ _ _
+Sa - ra -      - - swa -      ti - - -
 p m p d        s' , n ,       d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 s' d r' s'     n , d ,        , , p m
-sha _ _ _      ra _ de _      _ _ vi _
+sha - - -      ra - de -      - - vi -
 p d n d        p d p m        r s n. d.
-dya _ _ _      _ _ pra _      de _ _ _
+dya - - -      - - pra -      de - - -
 
 >> \item
 s , r ,        , , p m        p m r s
-Sa _ ra _      _ _ swa _      ti _ _ _
+Sa - ra -      - - swa -      ti - - -
 p m p d        s' , n ,       d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 s' r' m' r'    p' m' r' s'    n d p m
-sha _ _ _      ra _ de _      _ _ vi _
+sha - - -      ra - de -      - - vi -
 p d r' s'      n d p m        r s n. d.
-dya _ _ _      _ _ pra _      de _ _ _
+dya - - -      - - pra -      de - - -
 >> \endenum
 
 >> \empty
@@ -51,23 +51,23 @@ dya _ _ _      _ _ pra _      de _ _ _
 >> \enum
 >> \item
 , , p d        , n d ,        p , , ds
-_ _ Kha ra     _ dhr ta _     vee _ _ _
+- - Kha ra     - dhr ta -     vee - - -
 dp m m ,       d , p ,        d , s' ,
-na _ _ _       pu _ _ _       sta _ ka _
+na - - -       pu - - -       sta - ka -
 , , d r'       , s' s' ,      s' s' n d
-_ _ Va ra      _ ma ni _      ma _ _ _
+- - Va ra      - ma ni -      ma - - -
 p d r' s'      s' s' n d      p n m ,
-la _ _ _       lan _ _ _      kr _ ta _
+la - - -       lan - - -      kr - ta -
 
 >> \item
 , , p d        , n d ,        p , , ds
-_ _ Kha ra     _ dhr ta _     vee _ _ _
+- - Kha ra     - dhr ta -     vee - - -
 dp m m ,       d , p ,        d , s' ,
-na _ _ _       pu _ _ _       sta _ ka _
+na - - -       pu - - -       sta - ka -
 , , r' m'      , r' s' ,      s' s' n d
-_ _ Va ra      _ ma ni _      ma _ _ _
+- - Va ra      - ma ni -      ma - - -
 p d r' s'      n d p m        r s n. d.
-la _ _ _       lan _ _ _      kr _ ta _
+la - - -       lan - - -      kr - ta -
 >> \endenum
 
 >> \empty
@@ -90,34 +90,34 @@ s r m p        d s' r' m'     , r' s' n
 >> \enum
 >> \item
 , , p d        , p m ,        r s r ,
-_ _ Na ra      _ ha ri _      su _ ta _
+- - Na ra      - ha ri -      su - ta -
 r m p d        p m r ,        r , s ,
-vi _ dhi _     la _ _ _       li _ ta _
+vi - dhi -     la - - -       li - ta -
 
 >> \item
 , , sr sr      , n. d. ,      s , s ,
-_ _ Na va      _ ma ni _      yu _ ta _
+- - Na va      - ma ni -      yu - ta -
 , , r ,        , p m ,        p , , ,
-_ _ Kam _      _ bhu ga _     le _ _ _
+- - Kam -      - bhu ga -     le - - -
 
 >> \item
 , , p d        , n d ,        p dn dp p
-_ _ Su ra      _ se _ _       vi _ ta _
+- - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-_ _ pa da      _ yu ga _      le _ _ _
+- - pa da      - yu ga -      le - - -
 , , d r'       s' , , ,       n , d ,
-_ _ Su _       dha _ _ _      ka _ ra _
+- - Su -       dha - - -      ka - ra -
 p d r' s'      s' d n d       dp p p ,
-ka _ ma _      dha _ va _     le _ _ _
+ka - ma -      dha - va -     le - - -
 
 >> \item
 , m p d        , n d ,        p dn dp p
-_ _ Su ra      _ se _ _       vi _ ta _
+- - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-_ _ pa da      _ yu ga _      le _ _ _
+- - pa da      - yu ga -      le - - -
 , , r' m'      r' r' s' ,     n , d ,
-_ _ Su _       _ dha _ _      ka _ ra _
+- - Su -       - dha - -      ka - ra -
 p d r' s'      n d p m        r s n. d.
-ka _ ma _      dha _ va _     le _ _ _
+ka - ma -      dha - va -     le - - -
 >> \endenum
 >> (Chittaswaram)

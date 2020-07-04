@@ -15,33 +15,33 @@ capitalize = all
 >> \enum
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa _ ra _      _ _ sva _      ti _ _ _
+Sa - ra -      - - sva -      ti - - -
 p m n d        p m p ,        d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 d , s' ,       n , d ,        , , p ,
-shaa _ _ _     ra _ de _      _ _ vi _
+shaa - - -     ra - de -      - - vi -
 p , , ,        , , p m        r s n. d.
-dyaa _ _ _     _ _ pra _      de _ _ _
+dyaa - - -     - - pra -      de - - -
 
 >> \item
 s , r ,        , , m ,        p , , ,
-Sa _ ra _      _ _ sva _      ti _ _ _
+Sa - ra -      - - sva -      ti - - -
 p m p d        s' , n ,       d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 s' d r' s'     n , d ,        , , p m
-shaa _ _ _     ra _ de _      _ _ vi _
+shaa - - -     ra - de -      - - vi -
 p d n d        p d p m        r s n. d.
-dyaa _ _ _     _ _ pra _      de _ _ _
+dyaa - - -     - - pra -      de - - -
 
 >> \item
 s , r ,        , , p m        p m r s
-Sa _ ra _      _ _ sva _      ti _ _ _
+Sa - ra -      - - sva -      ti - - -
 p m p d        s' , n ,       d , , ,
-na _ mo _      _ _ stu _      te _ _ _
+na - mo -      - - stu -      te - - -
 s' r' m' r'    p' m' r' s'    n d p m
-shaa _ _ _     ra _ de _      _ _ vi _
+shaa - - -     ra - de -      - - vi -
 p d r' s'      n d p m        r s n. d.
-dyaa _ _ _     _ _ pra _      de _ _ _
+dyaa - - -     - - pra -      de - - -
 >> \endenum
 
 >> \section Anupallavi
@@ -49,23 +49,23 @@ dyaa _ _ _     _ _ pra _      de _ _ _
 >> \enum
 >> \item
 , , p d        , n d ,        p , , ds
-_ _ Kha ra     _ dhrR ta _    vee _ _ _
+- - Kha ra     - dhrR ta -    vee - - -
 dp m m ,       d , p ,        d , s' ,
-nNaa _ _ _     pu _ _ _       sta _ ka _
+nNaa - - -     pu - - -       sta - ka -
 , , d r'       , s' s' ,      s' s' n d
-_ _ Va ra      _ ma nNi _     maa _ _ _
+- - Va ra      - ma nNi -     maa - - -
 p d r' s'      s' s' n d      p n m ,
-laa _ _ _      laHN _ _ _     krR _ ta _
+laa - - -      laHN - - -     krR - ta -
 
 >> \item
 , , p d        , n d ,        p , , ds
-_ _ Kha ra     _ dhrR ta _    vee _ _ _
+- - Kha ra     - dhrR ta -    vee - - -
 dp m m ,       d , p ,        d , s' ,
-nNaa _ _ _     pu _ _ _       sta _ ka _
+nNaa - - -     pu - - -       sta - ka -
 , , r' m'      , r' s' ,      s' s' n d
-_ _ Va ra      _ ma nNi _     maa _ _ _
+- - Va ra      - ma nNi -     maa - - -
 p d r' s'      n d p m        r s n. d.
-laa _ _ _      laHN _ _ _     krR _ ta _
+laa - - -      laHN - - -     krR - ta -
 >> \finish (Cittaswaram; Saraswati)
 >> \endenum
 
@@ -85,34 +85,34 @@ s r m p        d s' r' m'     , r' s' n
 >> \enum
 >> \item
 , , p d        , p m ,        r s r ,
-_ _ Na ra      _ ha ri _      su _ ta _
+- - Na ra      - ha ri -      su - ta -
 r m p d        p m r ,        r , s ,
-vi _ dhi _     laa _ _ _      lLi _ ta _
+vi - dhi -     laa - - -      lLi - ta -
 
 >> \item
 , , sr sr      , n. d. ,      s , s ,
-_ _ Na va      _ ma nNi _     yu _ ta _
+- - Na va      - ma nNi -     yu - ta -
 , , r ,        , p m ,        p , , ,
-_ _ kam _      _ bhu ga _     lLe _ _ _
+- - kam -      - bhu ga -     lLe - - -
 
 >> \item
 , , p d        , n d ,        p dn dp p
-_ _ Su ra      _ se _ _       vi _ ta _
+- - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-_ _ pa da      _ yu ga _      lLe _ _ _
+- - pa da      - yu ga -      lLe - - -
 , , d r'       s' , , ,       n , d ,
-_ _ Su _       dhaa _ _ _     ka _ ra _
+- - Su -       dhaa - - -     ka - ra -
 p d r' s'      s' d n d       dp p p ,
-ka _ ma _      dha _ va _     lLe _ _ _
+ka - ma -      dha - va -     lLe - - -
 
 >> \item
 , m p d        , n d ,        p dn dp p
-_ _ Su ra      _ se _ _       vi _ ta _
+- - Su ra      - se - -       vi - ta -
 , m d p        , d d ,        s' , , ,
-_ _ pa da      _ yu ga _      lLe _ _ _
+- - pa da      - yu ga -      lLe - - -
 , , r' m'      r' r' s' ,     n , d ,
-_ _ Su _       _ dhaa _ _     ka _ ra _
+- - Su -       - dhaa - -     ka - ra -
 p d r' s'      n d p m        r s n. d.
-ka _ ma _      dha _ va _     lLe _ _ _
+ka - ma -      dha - va -     lLe - - -
 >> \finish (Cittaswaram; Saraswati)
 >> \endenum
