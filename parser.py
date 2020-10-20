@@ -10,7 +10,7 @@ import sys
 
 
 taalam_chars = '|,;+_*'
-swaram_chars = 'srgmpdnSRGMPDN\'.123 \t,;_\\'
+swaram_chars = 'srgmpdnSRGMPDN-\'.123 \t,;_\\'
 default_config = {
     'squeeze': 1,
     'italicize': True,
