@@ -22,7 +22,7 @@ g r s ,        n. , s ,       m , , ,        , , , ,        p m m g        g , g
 - - - -        Bha - ja -     re - - -       - - - -        re - - -       - - maa -      - - na -       sa - - -       - - - -        - - shree -    - - ra -       ghu - - -      vee - - -      - - - -        - - - -        ram - - -
 
 >> \item
-m g r s        , , s ,        , , s ,        s n. r s       s , n. n.      n. n. s n.     n. d. d. p.    p. , n. ,      s , , ,        , , s ,        g , m n        p , , ,        , , , m        g , , ,        , , g ,        m g m g
+m g r s        , , s ,        , , s ,        s n. r s       s n. n. ,      n. n. s n.     n. d. d. p.    p. , n. ,      s , , ,        , , s ,        g , m n        p , , ,        , , , m        g , , ,        , , g ,        m g m g
 - - - -        - - Bhu -      - - kti -      mu - - -       - - - -        kti - - -      - - - -        pra - - -      dam - - -      - - vaa -      - - su -       de - - -       - - - -        vam - - -      - - ha -       rim - - -
 
 >> \item
