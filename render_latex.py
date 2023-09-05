@@ -47,6 +47,8 @@ if __name__ == '__main__':
         print(r'\usepackage[margin=1in]{geometry}', file=outfile)
         print(r'\usepackage{parskip}', file=outfile)
         print(r'\usepackage{lmodern}', file=outfile)
+        print(r'\usepackage{microtype}', file=outfile)
+        #print(r'\SetProtrusion{--={0,0}}', file=outfile)  # XXX en-dashes show weird behaviour currently, because of microtype I believe
         print(preamble, file=outfile)
         print(r'\begin{document}', file=outfile)
         #print(r'\fontsize{9pt}{9pt}\selectfont', file=outfile)
